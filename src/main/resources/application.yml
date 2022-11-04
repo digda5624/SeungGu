@@ -1,17 +1,8 @@
 spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/lock
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-#        show_sql: true
-        format_sql: true
-#logging:
-#  level:
-#    org.hibernate.SQL: debug
+  config:
+    import: application-insertbatch.yml, application-lock.yml
+  profiles:
+    active: ib
+    group:
+      ib: insertbatch
+      lo: lock

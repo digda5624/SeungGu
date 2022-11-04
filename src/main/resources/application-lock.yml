@@ -1,0 +1,18 @@
+spring:
+  config.activate.on-profile: lock
+  datasource:
+    url:  jdbc:h2:tcp://localhost/~/lock
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+#        format_sql: true
+#        show_sql: true
+    open-in-view: false
+#logging:
+#  level:
+#    org.hibernate.SQL: info
