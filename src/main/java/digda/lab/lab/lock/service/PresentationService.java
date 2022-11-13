@@ -38,17 +38,20 @@ public class PresentationService {
 
      @Transactional
      public void registerWithPessimisticLock(Long presentationId){
+         Presentation presentation = presentationRepository.findByIdForPessimisticLock(presentationId);
          UUID uuid = UUID.randomUUID();
          log.info("대기열 번호 " + uuid);
-         Presentation presentation = presentationRepository.findByIdForPessimisticLock(presentationId);
          log.info(uuid + "presentation 상태 : {}/{} (신청/최대) | {} (대기)",
                  presentation.getParticipantCnt(), presentation.getMaxPerson(), presentation.getWaitingCnt());
 
          if (canParticipate(presentation)){
-             participate(presentation);
+             Participation participate = participate(presentation);
+             System.out.println("participate.getId() = " + participate.getId());
          } else {
-             wait(presentation);
+             Waiting wait = wait(presentation);
+             System.out.println("wait.getId() = " + wait.getId());
          }
+         System.out.println("presentation = " + presentation.getParticipantCnt());
      }
 
     @Transactional
@@ -72,21 +75,21 @@ public class PresentationService {
          return maxPerson > participantCnt;
      }
 
-     private void participate(Presentation presentation){
+     private Participation participate(Presentation presentation){
          // 설명회 인원수 증가
          presentation.plusParticipantCnt();
 
          Participation participation = Participation.createParticipation(presentation);
-         participationRepository.save(participation);
+         return participationRepository.save(participation);
      }
 
-     private void wait(Presentation presentation){
+     private Waiting wait(Presentation presentation){
          // 대기 인원 수 증가
          presentation.plusWaitingCnt();
          // 대기 번호 부여
          Integer waitingCnt = presentation.getWaitingCnt();
 
          Waiting waiting = Waiting.createWaiting(waitingCnt, presentation);
-         waitingRepository.save(waiting);
+         return waitingRepository.save(waiting);
      }
 }
