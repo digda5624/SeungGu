@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @Getter
 public class Waiting {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer orders;
     private LocalTime localTime;

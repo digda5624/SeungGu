@@ -13,7 +13,7 @@ import java.util.List;
 public class Presentation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Integer maxPerson;
@@ -23,7 +23,7 @@ public class Presentation {
     @Version
     private Long version;
 
-    @OneToMany(mappedBy = "presentation")
+    @OneToMany(mappedBy = "presentation", fetch = FetchType.EAGER)
     private List<Waiting> waitingList = new ArrayList<>();
     @OneToMany(mappedBy = "presentation")
     private List<Participation> participationList = new ArrayList<>();

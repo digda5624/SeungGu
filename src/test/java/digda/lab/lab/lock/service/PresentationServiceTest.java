@@ -59,13 +59,15 @@ class PresentationServiceTest {
         Presentation presentation = Presentation.createPresentation("락없는 설명회", 10);
         presentationRepository.save(presentation);
 
-        for(int i = 0; i < 200; i++) {
+        for(int i = 0; i < 10; i++) {
             new Thread(() -> {
                 presentationService.registerWithOptimisticLock(presentation.getId());
             }).start();
         }
         Thread.sleep(6000);
-    }
 
+        Presentation presentation1 = presentationRepository.findById(presentation.getId()).get();
+        System.out.println("-===");
+    }
 
 }

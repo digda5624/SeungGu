@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @Getter
 public class Participation {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalTime time;
     @ManyToOne(fetch = FetchType.LAZY)

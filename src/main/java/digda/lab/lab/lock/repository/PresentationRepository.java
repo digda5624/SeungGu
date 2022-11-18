@@ -14,9 +14,6 @@ public interface PresentationRepository extends JpaRepository<Presentation, Long
 
     @Query("select p from Presentation p where p.id = :presentationId")
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @QueryHints(
-    @QueryHint(name = "javax.persistence.lock.timeout", value = "0")
-    )
     Presentation findByIdForPessimisticLock(@Param("presentationId") Long presentationId);
 
     @Query("select p from Presentation p where p.id = :presentationId")

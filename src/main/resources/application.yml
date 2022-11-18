@@ -1,8 +1,9 @@
 spring:
   config:
-    import: application-insertbatch.yml, application-lock.yml
+    import: application-insertbatch.yml, application-lock.yml, application-optimisticlock.yml
   profiles:
-    active: ib
+    active: lo
     group:
       ib: insertbatch
       lo: lock
+      op: oplock

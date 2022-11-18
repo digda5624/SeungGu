@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.UUID;
 
 @Service
@@ -21,6 +22,12 @@ public class PresentationService {
      private final ParticipationRepository participationRepository;
      private final PresentationRepository presentationRepository;
      private final WaitingRepository waitingRepository;
+
+     @PostConstruct
+     public void init(){
+         Presentation presentation = Presentation.createPresentation("설명회", 10);
+         presentationRepository.save(presentation);
+     }
 
      @Transactional
      public void registerWithNoLock(Long presentationId) {
