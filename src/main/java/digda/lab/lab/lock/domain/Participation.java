@@ -1,5 +1,6 @@
 package digda.lab.lab.lock.domain;
 
+import digda.lab.lab.lock.service.PresentationService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,10 +18,12 @@ public class Participation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Presentation presentation;
+    private int checksum;
 
     public Participation(Presentation presentation) {
         this.time = LocalTime.now();
         this.presentation = presentation;
+        this.checksum = PresentationService.i;
     }
 
     public static Participation createParticipation(Presentation presentation) {

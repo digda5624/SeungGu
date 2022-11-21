@@ -22,6 +22,7 @@ public class PresentationService {
      private final ParticipationRepository participationRepository;
      private final PresentationRepository presentationRepository;
      private final WaitingRepository waitingRepository;
+     public static int i = 0;
 
      @PostConstruct
      public void init(){
@@ -46,19 +47,15 @@ public class PresentationService {
      @Transactional
      public void registerWithPessimisticLock(Long presentationId){
          Presentation presentation = presentationRepository.findByIdForPessimisticLock(presentationId);
-         UUID uuid = UUID.randomUUID();
-         log.info("대기열 번호 " + uuid);
-         log.info(uuid + "presentation 상태 : {}/{} (신청/최대) | {} (대기)",
+         i++;
+         log.info("presentation 상태 : {}/{} (신청/최대) | {} (대기)",
                  presentation.getParticipantCnt(), presentation.getMaxPerson(), presentation.getWaitingCnt());
 
          if (canParticipate(presentation)){
-             Participation participate = participate(presentation);
-             System.out.println("participate.getId() = " + participate.getId());
+             participate(presentation);
          } else {
              Waiting wait = wait(presentation);
-             System.out.println("wait.getId() = " + wait.getId());
          }
-         System.out.println("presentation = " + presentation.getParticipantCnt());
      }
 
     @Transactional

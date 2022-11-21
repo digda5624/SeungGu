@@ -40,7 +40,7 @@ class PresentationServiceTest {
     public void 설명회_신청_비관락() throws InterruptedException {
         // given
 
-        Presentation presentation = Presentation.createPresentation("비관적락 설명회", 10);
+        Presentation presentation = Presentation.createPresentation("비관적락 설명회", 100);
         presentationRepository.save(presentation);
 
         for(int i = 0; i < 200; i++) {
@@ -68,6 +68,17 @@ class PresentationServiceTest {
 
         Presentation presentation1 = presentationRepository.findById(presentation.getId()).get();
         System.out.println("-===");
+    }
+
+    @Test
+    @DisplayName("[success] 비관적락_순서보장")
+    public void 비관적락_순서보장(){
+        // given
+        Presentation presentation = Presentation.createPresentation("순서보장?", 100);
+        presentationRepository.save(presentation);
+        // when
+
+        // then
     }
 
 }
